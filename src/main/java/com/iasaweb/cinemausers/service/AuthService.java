@@ -16,13 +16,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Service
 public class AuthService {
     private final UserService userService;
-    private final JwtService jwtService;
+    private final JwtCreationService jwtService;
     private final AuthenticationManager authManager;
     private final PasswordEncoder passwordEncoder;
 
     public AuthService(
         UserService userService,
-        JwtService jwtService,
+        JwtCreationService jwtService,
         AuthenticationManager authManager,
         PasswordEncoder passwordEncoder
     ) {
