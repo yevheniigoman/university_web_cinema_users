@@ -47,6 +47,7 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
+    public Role getRole() { return role; }
 
     public void setUsername(String username) {
         this.username = username;

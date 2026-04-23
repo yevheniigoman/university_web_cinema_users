@@ -20,13 +20,6 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(name));
     }
 
-    public User create(User user) throws UserAlreadyExistsException {
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new UserAlreadyExistsException(user.getUsername());
-        }
-        return userRepository.save(user);
-    }
-
     public UserDetailsService userDetailsService() {
         return this::findByUsername;
     }

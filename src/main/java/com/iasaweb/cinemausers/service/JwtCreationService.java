@@ -38,7 +38,7 @@ public class JwtCreationService {
                 .compact();
     }
 
-    private List<String> serializeAuthorities(Collection<? extends GrantedAuthority> authorities) {
+    private static List<String> serializeAuthorities(Collection<? extends GrantedAuthority> authorities) {
         return authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
