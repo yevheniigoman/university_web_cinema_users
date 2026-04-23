@@ -8,8 +8,8 @@ import com.iasaweb.cinemausers.service.RegistrationService;
 import com.iasaweb.cinemausers.exception.UserAlreadyExistsException;
 
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class RegisterServiceTests {
     private static final String EXISTING_USERNAME = "Existing User";
     private RegistrationService registrationService;
-    private PasswordEncoder passwordEncoder;
+//    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void beforeEach() {
@@ -34,8 +34,9 @@ public class RegisterServiceTests {
         when(userRepository.save(any(User.class)))
                 .thenAnswer(invocation -> (User) invocation.getArgument(0));
 
-        passwordEncoder = new BCryptPasswordEncoder();
-        registrationService = new RegistrationService(passwordEncoder, userRepository);
+//        passwordEncoder = new BCryptPasswordEncoder();
+//        registrationService = new RegistrationService(passwordEncoder, userRepository);
+        registrationService = new RegistrationService(userRepository);
     }
 
     @Test
@@ -44,7 +45,7 @@ public class RegisterServiceTests {
         User registeredUser = registrationService.register(registerDto);
 
         assertEquals(registerDto.username(), registeredUser.getUsername());
-        assertTrue(passwordEncoder.matches(registerDto.password(), registeredUser.getPassword()));
+//        assertTrue(passwordEncoder.matches(registerDto.password(), registeredUser.getPassword()));
         assertEquals(registerDto.role(), registeredUser.getRole());
     }
 

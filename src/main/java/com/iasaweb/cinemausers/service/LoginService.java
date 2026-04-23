@@ -1,35 +1,28 @@
 package com.iasaweb.cinemausers.service;
 
 import com.iasaweb.cinemausers.dto.LoginDto;
+import com.iasaweb.cinemausers.entity.User;
 import com.iasaweb.cinemausers.exception.UserNotFoundException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import com.iasaweb.cinemausers.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Service
 public class LoginService {
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final JwtCreationService jwtService;
-    private final AuthenticationManager authManager;
 
     public LoginService(
-        UserService userService,
-        JwtCreationService jwtService,
-        AuthenticationManager authManager
+        UserRepository userRepository,
+        JwtCreationService jwtService
     ) {
-        this.userService = userService;
+        this.userRepository = userRepository;
         this.jwtService = jwtService;
-        this.authManager = authManager;
     }
 
     public String login(LoginDto body) throws UserNotFoundException {
-        var token = new UsernamePasswordAuthenticationToken(body.username(), body.password());
-        authManager.authenticate(token);
-
-        UserDetails user = userService
-                .userDetailsService()
-                .loadUserByUsername(body.username());
+        User user = userRepository.findByUsername(body.username())
+                .orElseThrow(() -> new UserNotFoundException(body.username()));
         return jwtService.token(user);
     }
 }
