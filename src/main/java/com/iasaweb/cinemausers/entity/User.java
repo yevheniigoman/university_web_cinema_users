@@ -1,16 +1,10 @@
 package com.iasaweb.cinemausers.entity;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.List;
-import java.util.Collection;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,10 +27,10 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return List.of(new SimpleGrantedAuthority(role.name()));
+//    }
 
     public Long getId() {
         return id;
@@ -47,6 +41,7 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
+    public Role getRole() { return role; }
 
     public void setUsername(String username) {
         this.username = username;
